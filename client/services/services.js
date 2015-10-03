@@ -54,7 +54,8 @@ function Auth ($window, $rootScope, $q, $http){
     var userProfile = $window.localStorage.getItem('userProfile');
     if (!userProfile) {
       userProfile = { authenticated: false };
-      $window.localStorage.setItem('userProfile', userProfile);
+      var toStore = JSON.stringify(userProfile)
+      $window.localStorage.setItem('userProfile', toStore);
     }
     $window.localStorage.userProfile.authenticated = userProfile.authenticated;
     return userProfile.authenticated;
@@ -62,16 +63,18 @@ function Auth ($window, $rootScope, $q, $http){
 
   function checkAuth(){
     return $http({
-      method: 'GET', 
+      method: 'GET',
       url: '/api/auth'
     })
     .then(function(response){
-      var userProfile = JSON.parse($window.localStorage.getItem('userProfile')) || {};
+      var userProfile = $window.localStorage.getItem('userProfile') || {};
+      console.log("PARSED: ", JSON.parse(userProfile));
+      var parsed = JSON.parse(userProfile);
       for(var key in response.data){
-        userProfile[key] = response.data[key];
-        userProfile.authenticated = true;
+        parsed[key] = response.data[key];
+        parsed.authenticated = true;
       };
-      $window.localStorage.setItem('userProfile', JSON.stringify(userProfile));
+      $window.localStorage.setItem('userProfile', JSON.stringify(parsed));
     }, function(response){
       console.log('error response: ', response.status, response.data);
     });
@@ -84,6 +87,7 @@ function Auth ($window, $rootScope, $q, $http){
     })
     .then(function(response){
       $window.localStorage.removeItem('userProfile');
+      checkAuth();
     });
   }
 

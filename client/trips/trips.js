@@ -20,6 +20,7 @@ function TripsController($http, $window, Fetcher, Auth){
   self.trips = Fetcher.trips || Fetcher.getTrips();
   self.currentTrip = Fetcher.currentTrip;
   self.isAuth = Auth.getAuth();
+  console.log("isAuth : ", self.isAuth)
   self.setTrip = function(index){
     self.currentTrip = Fetcher.setCurrentTrip(self.trips[index]);
     console.log(self.currentTrip);

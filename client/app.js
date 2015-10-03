@@ -7,6 +7,7 @@ angular.module('venshurApp', [
   'PhotoView'
 ])
 .run(['Auth', function(Auth){
+  Auth.getAuth();
   Auth.checkAuth();
 }])
 .config(['$routeProvider', '$httpProvider', function($routeProvider, $httpProvider) {
