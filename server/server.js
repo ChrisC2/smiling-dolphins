@@ -65,6 +65,12 @@ app.get('/auth/instagram/callback', function (req, res, next) {
     })(req, res, next);
   //   res.json({name: 'jeff'});
 });
+app.get('/api/logout', function(req, res) {
+    req.session.destroy(function(){
+        req.logout();
+        res.redirect('/');
+    });
+});
 
 // app.param()
 app.get('/api/trip/:id', function(req, res){

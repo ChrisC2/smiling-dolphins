@@ -4,6 +4,7 @@ angular.module('venshurServices', [])
 
 var trips = [];
 var currentTrip = {};
+var userProfile = [];
 
 function Fetcher ($http) {
 
